@@ -1,32 +1,20 @@
-import sys
-import socket
-import urllib.request
-k = 0
-while k == 0:
-    out = input("Enter URL: ")
-    ip = socket.gethostbyname_ex(out)
-    print(out, ip)
-    out = "https://"+out
-    def attempt_open_url(out):
-        try:
-            with urllib.request.urlopen(out) as response:
-                return response.read()
-        except urllib.error.URLError as e:
-            print(f"Error opening URL: {e.reason}")
-            return None
+import sys, argparse, socket, urllib.request, mods
+# Initialize parser
+parser = argparse.ArgumentParser()
 
-        content = attempt_open_url(out)
+# Adding optional argument
+parser.add_argument("-u", "--url", help = "enter url")
+parser.add_argument("-w", "--wordlist", help = "enter file path to wordlist")
 
-        if content():
-            print("URL opened successfully!")
-        else:
-            print("Failed to open URL.")
-    inp = input("Continue? Y/N: ")
-    if inp == 'Y':
-        k==0
-    else:
-        break
+# Read arguments from command line
+args = parser.parse_args()
 
-
-
-    
+if args.url:
+    out = args.url
+    wl = args.wordlist
+    k = 0
+    while k == 0:
+        furl = "https://"+out
+        ip = socket.gethostbyname_ex(out)
+        print(ip)
+        break    
